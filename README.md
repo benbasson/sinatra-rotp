@@ -10,13 +10,13 @@ For production purposes, please only expose this service over HTTPS, or via loca
 
 Fork this repository and then run Bundler to pull the required dependencies:
 
-~~~ .bash
+~~~
 bundle install
 ~~~
 
 To start up:
 
-~~~ .bash
+~~~
 rackup config.ru
 ~~~
 
@@ -24,7 +24,7 @@ rackup config.ru
 
 ### Generate a new base32 secret
 
-~~~ .http
+~~~
 /generate-secret
 ~~~
 
@@ -32,7 +32,7 @@ Creates a new base32 token for you to store as a secret key.
 
 ### Get QR Code
 
-~~~ .http
+~~~
 /get-otp-qr-code/:user/:secret/:issuer
 ~~~
 
@@ -44,7 +44,7 @@ Creates a QR code as a PNG containing:
 
 ### Verify a code
 
-~~~ .http
+~~~
 /verify-otp-code/:secret/:code
 ~~~~
 
@@ -52,7 +52,7 @@ Verifies that a user-provided code matches the expected value for the shared sec
 
 ### Check the service is running
 
-~~~ .http
+~~~
 /service-status
 ~~~
 
