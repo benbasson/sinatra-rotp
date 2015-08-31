@@ -8,7 +8,7 @@ For production purposes, please only expose this service over HTTPS, or via loca
 
 ## Installation
 
-Fork this repository and then run Bundler to pull the required dependencies:
+Fork [this repository](https://github.com/benbasson/sinatra-rotp) and then run Bundler to pull the required dependencies:
 
 ~~~
 bundle install
