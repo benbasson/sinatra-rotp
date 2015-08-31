@@ -50,6 +50,14 @@ Creates a QR code as a PNG containing:
 
 Verifies that a user-provided code matches the expected value for the shared secret. Returns a text value of "true" or "false".
 
+### Get the current code
+
+~~~
+/current-otp-code/:secret
+~~~
+
+Get the current time-based code for a given secret.
+
 ### Check the service is running
 
 ~~~

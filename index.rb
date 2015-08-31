@@ -57,6 +57,21 @@ get '/verify-otp-code/:secret/:otp_code' do |secret,otp_code|
   totp.verify(otp_code).to_s
 end
 
+get '/current-otp-code/:secret' do |secret|
+  content_type 'text/plain'
+
+  if secret.nil?
+    return 'Must provide a secret and a code'
+  end
+
+  if secret.size % 8 != 0
+    return 'Secret must be a multiple of 8 characters in length'
+  end
+
+  totp = ROTP::TOTP.new(secret)
+  totp.now
+end
+
 get '/service-status' do
   content_type 'text/plain'
   "Up and running: #{Time.now.to_formatted_s :db}" 
