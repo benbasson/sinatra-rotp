@@ -1,0 +1,35 @@
+h2 {
+  border-bottom: 1px dashed #000000;
+  margin-bottom: 20px;
+}
+
+h4 {
+  margin-top: 1em;
+}
+
+a.refresh-link {
+  cursor: pointer;
+}
+
+.well-mono {
+  font-family: monospace;
+  font-size: 12pt;
+  margin-bottom: 0.5em;
+}
+
+label {
+  font-weight: normal;
+}
+
+img#qr-code {
+  margin: 0;
+}
+
+.content-wrapper {
+  width: 95%;
+}
+
+body {
+  margin-top: 2em;
+  margin-bottom: 3em;
+}

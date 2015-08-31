@@ -3,26 +3,35 @@ require 'rotp'
 require 'base32'
 require 'rqrcode_png'
 require 'active_support/core_ext/time'
+require 'haml'
+require 'kramdown'
 
 configure do
   set :server, 'thin'
+  set :haml, :attr_wrapper => '"'
+end
+
+helpers do
+  def generate_secret
+    ROTP::Base32.random_base32.upcase
+  end
 end
 
 get '/' do
-  content_type 'text/plain'
-  "API Documentation:\n\n" +
-      "/generate-secret - generates a new base32 secret\n\n" +
-      "/get-otp-qr-code/:user/:secret/:issuer - gets a OTP QR code (png) for Google Authenticator or similar\n\n" +
-      "/verify-otp-code/:secret/:otp_code - checks if a code is valid for a secret, returns string true or false\n\n" +
-      "/service-status - determines that this service is up and running\n\n"
+  @readme = File.read 'README.md'
+  @default_secret = generate_secret
+  @default_user = 'joebloggs@example.com'
+  @default_system = 'eSystem'
+  @starting_otp_code = ROTP::TOTP.new(@default_secret).now
+  haml :index
 end
 
 get '/generate-secret' do
   content_type 'text/plain'
-  ROTP::Base32.random_base32.upcase
+  generate_secret
 end
 
-get '/get-otp-qr-code/:user/:secret/:issuer' do |user,secret,issuer|
+get '/get-otp-qr-code/:user/:secret/:issuer?' do |user,secret,issuer|
   if user.nil? or secret.nil?
     content_type 'text/plain'
     return 'Must provide a user and a secret, issuer may be omitted'

@@ -1,0 +1,74 @@
+!!!
+%html
+  %head
+    %meta{http: {equiv: 'Content-Type'}, content: 'text/html; charset=UTF-8'}
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %title< Sinatra ROTP
+    %link{href: '/css/bootstrap.min.css', rel: 'stylesheet', media: 'screen'}
+    %link{href: '/css/style.css', rel: 'stylesheet', media: 'screen'}
+    %meta{name: 'description', content: 'A Sinatra REST API wrapping the ROTP library, to allow other applications to more easily plug in Time-Based One-Time Passwords (TOTP) for multi-factor authentication.'}
+    %meta{property: 'og:description', content: 'A Sinatra REST API wrapping the ROTP library, to allow other applications to more easily plug in Time-Based One-Time Passwords (TOTP) for multi-factor authentication.'}
+    %meta{property: 'og:title', content: 'Sinatra ROTP'}
+  %body
+    .container
+      .row.outer-row
+        .col-md-8
+          .content-wrapper
+            = preserve Kramdown::Document.new(@readme, {header_offset: 1}).to_html
+        .col-md-4
+          %h2 Try it out!
+          .row
+            .col-md-12
+              .panel.panel-default
+                .panel-heading<
+                  1. Set identifiers
+                .panel-body
+                  %form
+                    .form-group
+                      %label<
+                        Username
+                      %input.form-control.user-editable#username{value: @default_user, autocomplete: 'off'}
+                    .form-group
+                      %label<
+                        Issuer
+                      %input.form-control.user-editable#issuer{value: @default_system, autocomplete: 'off'}
+          .row
+            .col-md-12
+              .panel.panel-default
+                .panel-heading<
+                  2. Generate secret
+                .panel-body
+                  .row
+                    .col-md-12
+                      .well.well-sm.well-mono#secret<
+                        = @default_secret
+                      %a.refresh-link<
+                        Generate new secret
+          .row
+            .col-md-12
+              .panel.panel-default
+                .panel-heading<
+                  3. Scan QR Code
+                .panel-body
+                  %img#qr-code.thumbnail{src: "/get-otp-qr-code/#{@default_user}/#{@default_secret}/#{@default_system}", width: 200, height: 200}
+          .row
+            .col-md-12
+              .panel.panel-default
+                .panel-heading<
+                  4. Time-based password
+                .panel-body
+                  .row
+                    .col-md-6
+                      %p
+                        TOTP Code
+                      .well.well-sm.well-mono#otpcode<
+                        = @starting_otp_code
+                    .col-md-6
+                      %p
+                        New Code Timer
+                      .well.well-sm.well-mono#countdown
+                        00:00
+    %script{src: '/js/jquery-2.0.3.min.js'}
+    %script{src: '/js/jquery.countdown.min.js'}
+    %script{src: '/js/bootstrap.min.js'}
+    %script{src: '/js/sinatra-rotp.js'}
